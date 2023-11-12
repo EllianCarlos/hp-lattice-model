@@ -1,11 +1,12 @@
-from affinity import Affinity
-from direction import Direction
-from hp2dmodel import Hp2dModel
+
+from lib.affinity import Affinity
+from lib.direction import Direction
+from lib.hp2dmodel import Hp2dSquareModel
 
 
 if __name__ == "__main__":
     print("Executing as main...")
-    model = Hp2dModel()
+    model = Hp2dSquareModel()
     model.start_model(Affinity.H)
     model.append_vertice(Direction.DOWN, Affinity.P)
     model.append_vertice(Direction.DOWN, Affinity.P)
@@ -24,5 +25,7 @@ if __name__ == "__main__":
     model.append_vertice(Direction.UP, Affinity.P)
     model.append_vertice(Direction.LEFT, Affinity.P)
     model.append_vertice(Direction.LEFT, Affinity.H)
-    model.print()
-    print(model.energy())
+    model.visualize_model()
+    model.print_sequence()
+    calculated_energy = model.energy()
+
