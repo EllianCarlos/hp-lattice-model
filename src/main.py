@@ -11,7 +11,7 @@ if __name__ == "__main__":
 
     best_model = None
 
-    for _ in range(100):
+    for _ in range(250):
         model = generate_biased_random_solution(protein_sequence)
 
         sa = SimulatedAnnealing(
@@ -19,7 +19,7 @@ if __name__ == "__main__":
             find_neighboor,
             actual_s=model.clone(),
             star_s=model.clone(),
-            max_iter=1000
+            max_iter=100
         )
 
         new_model = sa.run()
