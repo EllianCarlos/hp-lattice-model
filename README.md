@@ -19,3 +19,9 @@ For running the instance in the `instance1.dat` file. The model best solution to
 Inside `src` folder is all the source code for the project, the file `main.py` holds the main script that creates the model, runs the SA and saves the best model and the `ica.py` has the Simulated Annealing Algorithm.
 
 Everything inside the `src/lib` folder is about the library utils made to fit the HP 2D Lattice models, they should not be ignored in this report because they're very important and all of them must fit the SA algorithm. The library utils were made to be generic enough to be able to run in any heuristic.
+
+Inside the `data` folder there is the used problems instances and the solutions the model was able to find.
+
+## The SA Algorithm
+
+The used SA algorithm is described in the report and is on the `src/ICA.py` file.
