@@ -27,7 +27,7 @@ class SimulatedAnnealing:
 
     """
 
-    def __init__(self, obj_func, neighbor_func: (), t_initial=10000, t_min=0.5, actual_s: Hp2dSquareModel = None, star_s: Hp2dSquareModel = None, alpha=0.95, k_iter=10, max_iter=100000):
+    def __init__(self, obj_func, neighbor_func: (), t_initial=10000, t_min=20, actual_s: Hp2dSquareModel = None, star_s: Hp2dSquareModel = None, alpha=0.95, k_iter=10, SAmax=100000):
         self.alpha = alpha
         self.k_iter = k_iter
         self.f = obj_func
@@ -36,24 +36,23 @@ class SimulatedAnnealing:
         self.t_initial = t_initial
         self.t_min = t_min
         self.actual_s = actual_s
-        self.max_iter = max_iter
+        self.max_iter = SAmax
 
     """Runs the algorithm with the given parameters
     """
 
     def run(self):
         i = 0
-        j = 0
+        iterT = 0
         self.__t = self.t_initial
 
-        while self.__t > self.t_min and j < self.max_iter:
-            j += 1
+        while self.__t > self.t_min and iterT < self.max_iter:
+            iterT += 1
             neighbor = self.find_neighbor(self.actual_s)
             delta = self.f(neighbor) - self.f(self.actual_s)
             entropy = np.exp(-delta/self.__t)
             if delta < 0 or uniform(0, 1) < entropy:
                 self.actual_s = neighbor
-                self.__t = self.__t * self.alpha
 
             if self.f(self.actual_s) <= self.f(self.star_s):
                 self.star_s = self.actual_s
@@ -63,6 +62,8 @@ class SimulatedAnnealing:
             if i == self.k_iter:
                 self.actual_s = self.find_neighbor(self.actual_s)
                 i = 0
+
+            self.__t = self.__t * self.alpha
 
         return self.star_s
 
@@ -111,8 +112,8 @@ def find_any_diagonal_move(model: Hp2dSquareModel):
 def find_neighboor(model: Hp2dSquareModel):
     # The find_best_improviment function is way slower than the find_any_diagonal_move in the average case, and the find_any_diagonal_move should be better to run from local optima.
 
-    star_switch, _ = find_best_improviment(model)
-    # star_switch, _ = find_any_diagonal_move(model)
+    # star_switch, _ = find_best_improviment(model)
+    star_switch, _ = find_any_diagonal_move(model)
     return model.switch_point(star_switch[0], star_switch[1])
 
 

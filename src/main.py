@@ -11,15 +11,16 @@ if __name__ == "__main__":
 
     best_model = None
 
-    for _ in range(250):
-        model = generate_biased_random_solution(protein_sequence)
+    for _ in range(100):
+        model = generate_random_solution(protein_sequence)
 
         sa = SimulatedAnnealing(
             lambda model: model.get_energy(),
             find_neighboor,
             actual_s=model.clone(),
             star_s=model.clone(),
-            max_iter=100
+            SAmax=1000,
+            alpha=0.90
         )
 
         new_model = sa.run()
